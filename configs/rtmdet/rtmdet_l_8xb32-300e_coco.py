@@ -3,10 +3,10 @@ _base_ = [
     '../_base_/datasets/coco_detection.py', './rtmdet_tta.py'
 ]
 metainfo = {
-'classes': ('Human'),
-'palette': [
-(255, 0, 0)
-]
+    'classes': ('Human'),
+    'palette': [
+        (255, 0, 0)
+    ]
 }
 model = dict(
     type='RTMDet',
@@ -166,16 +166,17 @@ param_scheduler = [
 
 # hooks
 default_hooks = dict(
-    checkpoint=dict(
-        interval=interval,
-        max_keep_ckpts=3  # only keep latest 3 checkpoints
-    ))
-log_config = dict(
-    interval=100,
-    hooks=[
-        dict(type='TextLoggerHook'),
-        dict(type='WandbLoggerHook')
+    log_config=dict(
+        interval=100,
+        hooks=[
+            dict(type='TextLoggerHook'),
+            dict(type='WandbLoggerHook')
         ])
+checkpoint = dict(
+    interval=interval,
+    max_keep_ckpts=3  # only keep latest 3 checkpoints
+))
+
 custom_hooks = [
     dict(
         type='EMAHook',
