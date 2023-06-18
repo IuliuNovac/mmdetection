@@ -1,6 +1,6 @@
 # dataset settings
 dataset_type = 'CocoDataset'
-data_root = 'Elephant_v1_960/'
+data_root = '~/Human_v4_v1_960/'
 dataset_type = 'CocoDataset'
 classes_list = ("Human" )
 # Example to use different file client
