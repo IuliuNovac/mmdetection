@@ -169,9 +169,8 @@ default_hooks = dict(
     log_config=dict(
         interval=100,
         hooks=[
-            dict(type='TextLoggerHook'),
             dict(type='WandbLoggerHook')
-        ])
+        ]),
 checkpoint = dict(
     interval=interval,
     max_keep_ckpts=3  # only keep latest 3 checkpoints
