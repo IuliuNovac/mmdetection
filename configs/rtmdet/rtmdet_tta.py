@@ -2,7 +2,7 @@ tta_model = dict(
     type='DetTTAModel',
     tta_cfg=dict(nms=dict(type='nms', iou_threshold=0.6), max_per_img=100))
 
-img_scales = [(640, 640), (320, 320), (960, 960)]
+img_scales = [(960, 960), (640, 640), (1440, 1440)]
 tta_pipeline = [
     dict(type='LoadImageFromFile', backend_args=None),
     dict(
@@ -22,7 +22,7 @@ tta_pipeline = [
             [
                 dict(
                     type='Pad',
-                    size=(960, 960),
+                    size=(1440, 1440),
                     pad_val=dict(img=(114, 114, 114))),
             ],
             [

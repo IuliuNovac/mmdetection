@@ -2,6 +2,12 @@ _base_ = [
     '../_base_/default_runtime.py', '../_base_/schedules/schedule_1x.py',
     '../_base_/datasets/coco_detection.py', './rtmdet_tta.py'
 ]
+metainfo = {
+'classes': ('Human'),
+'palette': [
+(255, 0, 0)
+]
+}
 model = dict(
     type='RTMDet',
     data_preprocessor=dict(
@@ -29,7 +35,7 @@ model = dict(
         act_cfg=dict(type='SiLU', inplace=True)),
     bbox_head=dict(
         type='RTMDetSepBNHead',
-        num_classes=80,
+        num_classes=1,
         in_channels=256,
         stacked_convs=2,
         feat_channels=256,
@@ -64,19 +70,19 @@ model = dict(
 train_pipeline = [
     dict(type='LoadImageFromFile', backend_args={{_base_.backend_args}}),
     dict(type='LoadAnnotations', with_bbox=True),
-    dict(type='CachedMosaic', img_scale=(640, 640), pad_val=114.0),
+    dict(type='CachedMosaic', img_scale=(960, 960), pad_val=114.0),
     dict(
         type='RandomResize',
-        scale=(1280, 1280),
+        scale=(1920, 1920),
         ratio_range=(0.1, 2.0),
         keep_ratio=True),
-    dict(type='RandomCrop', crop_size=(640, 640)),
+    dict(type='RandomCrop', crop_size=(960, 960)),
     dict(type='YOLOXHSVRandomAug'),
     dict(type='RandomFlip', prob=0.5),
-    dict(type='Pad', size=(640, 640), pad_val=dict(img=(114, 114, 114))),
+    dict(type='Pad', size=(960, 960), pad_val=dict(img=(114, 114, 114))),
     dict(
         type='CachedMixUp',
-        img_scale=(640, 640),
+        img_scale=(960, 960),
         ratio_range=(1.0, 1.0),
         max_cached_images=20,
         pad_val=(114, 114, 114)),
@@ -88,20 +94,20 @@ train_pipeline_stage2 = [
     dict(type='LoadAnnotations', with_bbox=True),
     dict(
         type='RandomResize',
-        scale=(640, 640),
+        scale=(960, 960),
         ratio_range=(0.1, 2.0),
         keep_ratio=True),
-    dict(type='RandomCrop', crop_size=(640, 640)),
+    dict(type='RandomCrop', crop_size=(960, 960)),
     dict(type='YOLOXHSVRandomAug'),
     dict(type='RandomFlip', prob=0.5),
-    dict(type='Pad', size=(640, 640), pad_val=dict(img=(114, 114, 114))),
+    dict(type='Pad', size=(960, 960), pad_val=dict(img=(114, 114, 114))),
     dict(type='PackDetInputs')
 ]
 
 test_pipeline = [
     dict(type='LoadImageFromFile', backend_args={{_base_.backend_args}}),
-    dict(type='Resize', scale=(640, 640), keep_ratio=True),
-    dict(type='Pad', size=(640, 640), pad_val=dict(img=(114, 114, 114))),
+    dict(type='Resize', scale=(960, 960), keep_ratio=True),
+    dict(type='Pad', size=(960, 960), pad_val=dict(img=(114, 114, 114))),
     dict(
         type='PackDetInputs',
         meta_keys=('img_id', 'img_path', 'ori_shape', 'img_shape',
