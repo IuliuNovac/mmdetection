@@ -163,7 +163,7 @@ param_scheduler = [
         by_epoch=True,
         convert_to_iter_based=True),
 ]
-vis_backends = [dict(type='LocalVisBackend'), dict(type='WandBVisBackend')]
+vis_backends = [dict(type='LocalVisBackend')]
 visualizer = dict(vis_backends=vis_backends)
 # hooks
 default_hooks = dict(
