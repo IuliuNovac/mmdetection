@@ -115,7 +115,7 @@ test_pipeline = [
 ]
 
 train_dataloader = dict(
-    batch_size=16,
+    batch_size=22,
     num_workers=10,
     batch_sampler=None,
     pin_memory=True,
@@ -170,6 +170,12 @@ default_hooks = dict(
         interval=interval,
         max_keep_ckpts=3  # only keep latest 3 checkpoints
     ))
+log_config = dict(
+    interval=100,
+    hooks=[
+        dict(type='TextLoggerHook'),
+        dict(type='WandbLoggerHook')
+        ])
 custom_hooks = [
     dict(
         type='EMAHook',
